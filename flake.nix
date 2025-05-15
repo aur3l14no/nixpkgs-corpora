@@ -17,7 +17,7 @@
 
       filteredPackageNames_2 = readFile ./assets/2.txt;
       filteredPackageNames_5 = readFile ./assets/5.txt;
-      filteredPackageNames_7 = readFile ./assets/7.txt;
+      filteredPackageNames_8 = readFile ./assets/8.txt;
 
       forSystems =
         f:
@@ -86,8 +86,8 @@
         lib.genAttrs filteredPackageNames_5 (
           name: pkgs.srcOnly (lib.getAttrFromPath (lib.splitString "." name) pkgs)
         );
-      stage7Corpora = forSystems (pkgs: makePackageVariants pkgs filteredPackageNames_7);
+      stage8Corpora = forSystems (pkgs: makePackageVariants pkgs filteredPackageNames_8);
 
-      legacyPackages = stage7Corpora;
+      legacyPackages = stage8Corpora;
     };
 }
