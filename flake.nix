@@ -18,6 +18,8 @@
       filteredPackageNames_2 = readFile ./assets/2.txt;
       filteredPackageNames_5 = readFile ./assets/5.txt;
       filteredPackageNames_8 = readFile ./assets/8.txt;
+      filteredPackageNames_10 = readFile ./assets/10.txt;
+      finalPackageNames = readFile ./assets/final.txt;
 
       forSystems =
         f:
@@ -87,7 +89,9 @@
           name: pkgs.srcOnly (lib.getAttrFromPath (lib.splitString "." name) pkgs)
         );
       stage8Corpora = forSystems (pkgs: makePackageVariants pkgs filteredPackageNames_8);
+      stage10Corpora = forSystems (pkgs: makePackageVariants pkgs filteredPackageNames_10);
 
-      legacyPackages = stage8Corpora;
+      finalCorpora = forSystems (pkgs: makePackageVariants pkgs finalPackageNames);
+      legacyPackages = finalCorpora;
     };
 }
