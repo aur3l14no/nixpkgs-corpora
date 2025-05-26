@@ -70,7 +70,6 @@
         // {
           recurseForDerivations = true;
         };
-
     in
     rec {
       stage2Pkgs = forSystems (
@@ -93,5 +92,15 @@
 
       finalCorpora = forSystems (pkgs: makePackageVariants pkgs finalPackageNames);
       legacyPackages = finalCorpora;
+
+      finalCorporaRoot = forSystems (
+        pkgs:
+        pkgs.linkFarm "finalCorporaRoot" (
+          builtins.map (name: {
+            name = name;
+            path = lib.getAttrFromPath (lib.splitString "." name) pkgs;
+          }) finalPackageNames
+        )
+      );
     };
 }
